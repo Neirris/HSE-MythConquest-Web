@@ -1,0 +1,37 @@
+  .wide-button {
+    width: 590px;
+    height: auto;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-size: 50px;
+    border-radius: 50px;
+    border: 3px solid #7289da;
+    transition: transform 0.2s ease;
+  }
+  
+  .small-button {
+    width: 290px;
+    height: auto;
+    margin-right: 10px;
+    font-size: 50px;
+    border-radius: 50px;
+    border: 3px solid #7289da;
+    transition: transform 0.2s ease;
+  }
+
+  .header-text{
+    font-size: 70px;
+    color: white;
+    margin-top: 30px;
+  }
+
+  
+
+  .wide-button:active {
+    transform: scale(0.9);
+  }
+
+  .small-button:active {
+    transform: scale(0.9);
+  }

@@ -1,0 +1,13 @@
+
+  .inventory-image {
+    width: 400px; /* Задайте нужную ширину для изображения */
+    border: 5px solid black;
+    transition: transform 0.2s ease;
+    display: block; 
+    margin: 0 auto; 
+    margin-bottom: 10px;
+  }
+
+  .inventory-image:active {
+    transform: scale(0.9);
+  }

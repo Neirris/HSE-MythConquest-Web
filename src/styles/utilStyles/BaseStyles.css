@@ -1,0 +1,236 @@
+/* КОНТЕЙНЕРЫ */
+
+.mainContainer {
+  position: absolute;
+  left: 12.5%;
+  right: 12.5%;
+  top: 0;
+  bottom: 0;
+  background-color: #424549;
+  border-left: #424549 solid 10px;
+  border-right: #424549 solid 10px;
+}
+
+.top {
+  flex-grow: 1;   
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 50vh;
+  /* background-color: red; */
+  width: 100%;
+}
+
+.bottom {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  /* background-color: green; */
+  width: 100%;
+}
+
+.left-base {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-basis: 20%;
+  overflow-y: auto;
+}
+
+.right-base {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 50%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.row-c {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.top-square {
+  background-color: #ccc;
+  height: 50vh;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;  
+  width: 100%;
+}
+
+/* ОПЦИИ */
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+.align-left{
+  align-items: flex-start;
+}
+
+.align-right{
+  align-items: flex-end;
+}
+
+.align-center{
+  align-items: center;
+}
+
+/* КНОПКИ */
+
+.button-long {
+  width: 590px;
+  height: auto;
+  margin-top: 15px;
+  margin-right: 10px;
+  border-radius: 50px;
+  border: 3px solid #7289da;
+  transition: transform 0.2s ease;
+}
+
+.button-short {
+  width: 290px;
+  height: auto;
+  margin-right: 10px;
+  border-radius: 50px;
+  border: 3px solid #7289da;
+  transition: transform 0.2s ease;
+}
+
+.button-short:active,
+.button-long:active {
+  transform: scale(0.9);
+}
+
+/* ТЕКСТ */
+
+.text-70px{
+  font-size: 50px;
+}
+
+.text-50px{
+  font-size: 50px;
+}
+
+.text-40px{
+  font-size: 40px;
+}
+
+.text-30px{
+  font-size: 30px;
+}
+
+.text-24px{
+  font-size: 24px;
+}
+
+.text-bold{
+  font-weight: bold;
+}
+
+.text-white{
+  color: white;
+}
+
+.text-black{
+  color: black;
+}
+
+.text-header-main{
+  font-size: 70px;
+  color: white;
+  margin-top: 30px;
+}
+
+.text-block{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 20px;
+    margin: 0 5px;
+    font-size: 15px;
+    height: auto;
+    width: 350px;
+    border: 3px solid #7289da;
+    position: relative;
+}
+
+
+.textbox-auth {
+  font-size: 50px;
+  text-align: left;
+  width: 1110px;
+  height: auto;
+  opacity: 0.8;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  color: black;
+  border: 3px solid #7289da;
+}
+
+/* ВЫПАДАЮЩИЙ СПИСОК */
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-header {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  text-align: center;
+  height: auto;
+  width: 900px;
+  font-size: 40px;
+  border-radius: 20px;
+  border: 3px solid #7289da;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 900px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  overflow-y: auto; 
+  max-height: 200px;
+  border-radius: 20px;
+  border: 3px solid #7289da;
+}
+
+.dropdown-options li {
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  font-size: 30px;
+}
+
+.dropdown-options li:hover {
+  background-color: #f0f0f0;
+}

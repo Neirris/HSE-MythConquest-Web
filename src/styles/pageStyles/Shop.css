@@ -1,0 +1,128 @@
+.shop-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .shop-top {
+    flex-grow: 1;   
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 50vh;
+  }
+  
+  .shop-bottom {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+  }
+
+  .shop-left {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-basis: 20%;
+    height: 50vh;
+  }
+
+  .shop-right {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 50%;
+    height: 50vh;
+  }
+
+  .shop-price-square {
+    background-color: #ccc;
+    height: 250px;
+    width: 250px;
+    border-radius: 20px;
+  }
+
+  .shop-block-text{
+    font-size: 30px;
+    color: black;
+    margin-left: 5px;
+  }
+
+  .shop-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #99AAB5;
+    border-radius: 20px;
+    margin: 0 5px;
+    font-size: 30px;
+    height: 350px;
+    width: 450px;
+    border: 3px solid #7289da;
+    position: relative;
+  }
+  
+  .shop-label {
+    font-weight: bold;
+  }
+  
+  .shop-value {
+    margin-top: 5px;
+  }
+
+  .shop-field-t {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 5px;
+    font-size: 30px;
+    height: 350px;
+    width: 450px;
+    position: relative;
+  }
+
+  .shop-label-t {
+    font-weight: bold;
+    color: white;
+  }
+  
+  .shop-value-t {
+    margin-top: 5px;
+    color: white;
+  }
+
+  .shop-button-ticket {
+    font-weight: bold;
+    font-size: 30px;
+    height: auto;
+    width: 550px;
+    border-radius: 20px;
+    border: 3px solid #7289da;
+    transition: transform 0.2s ease;
+  }
+
+  .shop-button-ticket:active {
+    transform: scale(0.9);
+  }
+
+  .shop-button-item {
+    font-weight: bold;
+    font-size: 30px;
+    height: auto;
+    width: 350px;
+    border-radius: 20px;
+    border: 3px solid #7289da;
+    transition: transform 0.2s ease;
+  }
+
+  .shop-button-item:active {
+    transform: scale(0.9);
+  }

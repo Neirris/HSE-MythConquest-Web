@@ -1,0 +1,25 @@
+body {
+    background-color: #1e2124;
+  }
+  
+  .App {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  /* .mainContainer {
+    position: absolute;
+    left: 12.5%;
+    right: 12.5%;
+    top: 0;
+    bottom: 0;
+    background-color: #424549;
+    border-left: #424549 solid 10px;
+    border-right: #424549 solid 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+  } */
