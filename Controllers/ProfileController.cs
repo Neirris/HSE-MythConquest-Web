@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using MythConquestWeb;
+using Newtonsoft.Json.Linq;
 
 namespace MythConquestWeb.Controllers
 {
@@ -19,10 +20,12 @@ namespace MythConquestWeb.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public ProfileInfo Get()
+        public ProfileInfo Get([FromHeader(Name = "Cookie")] string cookieValue)
         {
             string connectionString = Startup.connString;
-            int userID = 1;
+            string jsonString = cookieValue.Substring(cookieValue.IndexOf("{"), cookieValue.LastIndexOf("}") - cookieValue.IndexOf("{") + 1);
+            JObject jsonObject = JObject.Parse(jsonString);
+            int userID = (int)jsonObject["userId"];
 
             using (NpgsqlConnection conn = new NpgsqlConnection(Startup.connString))
             {
@@ -83,12 +86,15 @@ namespace MythConquestWeb.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public ProfileStats Get()
+        public ProfileStats Get([FromHeader(Name = "Cookie")] string cookieValue)
         {
             string connectionString = Startup.connString;
-            int userID = 1;
-            int curr_char_id = 0, curr_ascensionLvl = 0, curr_rarity = 0, char_class = 0, char_value =0;
-            string char_name="", char_url ="", class_name = "", char_gender = "";
+            int curr_char_id = 0, curr_ascensionLvl = 0, curr_rarity = 0, char_class = 0, char_value = 0;
+            string char_name = "", char_url = "", class_name = "", char_gender = "";
+
+            string jsonString = cookieValue.Substring(cookieValue.IndexOf("{"), cookieValue.LastIndexOf("}") - cookieValue.IndexOf("{") + 1);
+            JObject jsonObject = JObject.Parse(jsonString);
+            int userID = (int)jsonObject["userId"];
 
             using (NpgsqlConnection conn = new NpgsqlConnection(Startup.connString))
             {
@@ -115,7 +121,7 @@ namespace MythConquestWeb.Controllers
                         char_name = CharData.GetString(1);
                         char_url = CharData.GetString(2);
                         char_class = CharData.GetInt32(3);
-                        char_gender= CharData.GetString(4);
+                        char_gender = CharData.GetString(4);
                         char_value = CharData.GetInt32(5);
                     }
                     CharData.Close();
@@ -125,7 +131,7 @@ namespace MythConquestWeb.Controllers
                                         WHERE class_id = @class_id";
                     cmd.Parameters.AddWithValue("@class_id", char_class);
                     class_name = (string)cmd.ExecuteScalar();
-                                   
+
 
                     cmd.CommandText = @"SELECT ascension_lvl FROM inventory_characters
                                         WHERE user_account_id = @userID AND char_id = @charID";
@@ -149,8 +155,8 @@ namespace MythConquestWeb.Controllers
                     }
 
                     int l_health_points = 0, l_defense = 0, l_attack = 0, l_crit = 0, l_initiative = 0, l_evasion = 0;
-                    double curr_hp = 0; 
-                    
+                    double curr_hp = 0;
+
                     cmd.CommandText = @"SELECT health_points, defense, attack, crit, initiative, evasion, curr_health_points
                                         FROM equipment_profile
                                         WHERE user_account_id = @userID";
@@ -158,36 +164,66 @@ namespace MythConquestWeb.Controllers
                     using var fullCharData = cmd.ExecuteReader();
                     while (fullCharData.Read())
                     {
-                         l_health_points = fullCharData.GetInt32(0);
-                         l_defense = fullCharData.GetInt32(1);
-                         l_attack = fullCharData.GetInt32(2);
-                         l_crit = fullCharData.GetInt32(3);
-                         l_initiative = fullCharData.GetInt32(4);
-                         l_evasion = fullCharData.GetInt32(5);
+                        l_health_points = fullCharData.GetInt32(0);
+                        l_defense = fullCharData.GetInt32(1);
+                        l_attack = fullCharData.GetInt32(2);
+                        l_crit = fullCharData.GetInt32(3);
+                        l_initiative = fullCharData.GetInt32(4);
+                        l_evasion = fullCharData.GetInt32(5);
                         curr_hp = fullCharData.GetDouble(6);
                     }
                     fullCharData.Close();
 
-                        ProfileStats profileData = new ProfileStats
-                        {
-                            name =  char_name,
-                            appearance_url = char_url,
-                            char_class = class_name,
-                            rarity = stars,
-                            gender = char_gender,
-                            value = char_value.ToString(),
-                            health_points = $"{curr_hp} / {l_health_points}",
-                            defense = l_defense.ToString(),
-                            attack = l_attack.ToString(),
-                            crit = l_crit.ToString(),
-                            initiative = l_initiative.ToString(),
-                            evasion = l_evasion.ToString()
-                        };
+                    ProfileStats profileData = new ProfileStats
+                    {
+                        name = char_name,
+                        appearance_url = char_url,
+                        char_class = class_name,
+                        rarity = stars,
+                        gender = char_gender,
+                        value = char_value.ToString(),
+                        health_points = $"{curr_hp} / {l_health_points}",
+                        defense = l_defense.ToString(),
+                        attack = l_attack.ToString(),
+                        crit = l_crit.ToString(),
+                        initiative = l_initiative.ToString(),
+                        evasion = l_evasion.ToString()
+                    };
                     return profileData;
                 }
             }
 
             return null;
+        }
+    }
+
+    [Route("/pfpupdate")]
+    public class ProfilePfpUpdateController : ControllerBase
+    {
+        [HttpPost]
+        public IActionResult PfpUpdate([FromHeader(Name = "Cookie")] string cookieValue)
+        {
+            string connectionString = Startup.connString;
+            string jsonString = cookieValue.Substring(cookieValue.IndexOf("{"), cookieValue.LastIndexOf("}") - cookieValue.IndexOf("{") + 1);
+            JObject jsonObject = JObject.Parse(jsonString);
+            int userID = (int)jsonObject["userId"];
+
+            var imageUrl = Request.Headers["newPfp"].ToString();
+
+            using (NpgsqlConnection conn = new NpgsqlConnection(Startup.connString))
+            {
+                conn.Open();
+                using (NpgsqlCommand cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = @"UPDATE users_profile_data SET user_pfp = @userPfp WHERE user_account_id = @userID";
+                    cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.Parameters.AddWithValue("@userPfp", imageUrl);
+                    cmd.ExecuteNonQuery();
+                }
+                return Ok();
+            }
+
         }
     }
 

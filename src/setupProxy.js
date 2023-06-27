@@ -14,7 +14,19 @@ const context = [
   "/getshopcoins",
   "/getequipmentlvl",
   "/getequipmentprice",
-  "/getusers"
+  "/getusers",
+  "/register",
+  "/login",
+  "/fcheck",
+  "/logout",
+  "/equipchar",
+  "/equipupgrade",
+  "/buyticket",
+  "/summonchar",
+  "/setpotions",
+  "/startTower",
+  "/startArena",
+  "/pfpupdate"
 ];
 
 const onError = (err, req, resp, target) => {

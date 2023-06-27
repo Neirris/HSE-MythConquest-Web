@@ -9,7 +9,7 @@ const ProfileInfo = ({ nickName, lvl, exp, expReq, money, valueSum, pvpWin, pvpL
         <div className="text-block">
           <span className="text-bold">Никнейм</span>
           <span style={{marginTop: "5px"}}>{nickName}</span>
-          <img className="nick-change-icon" src={NickIcon} alt=''></img> 
+          {/* <img className="nick-change-icon" src={NickIcon} alt=''></img>  */}
         </div>
         <div className="text-block">
           <span className="text-bold">Уровень</span>
@@ -32,19 +32,23 @@ const ProfileInfo = ({ nickName, lvl, exp, expReq, money, valueSum, pvpWin, pvpL
           <span style={{marginTop: "5px"}}>{money}</span>
         </div>
         <div className="text-block">
-          <span className="text-bold">Ценность</span>
-          <span style={{marginTop: "5px"}}>{valueSum}</span>
-        </div>
-      </div>
-      <div className="row-c">
-        <div className="text-block">
           <span className="text-bold">Победы/Поражения (PvP)</span>
           <span style={{marginTop: "5px"}}>{pvpWin}/{pvpLose}</span>
         </div>
-        <div className="text-block">
+        {/* <div className="text-block">
+          <span className="text-bold">Ценность</span>
+          <span style={{marginTop: "5px"}}>{valueSum}</span>
+        </div> */}
+      </div>
+      <div className="row-c">
+        {/* <div className="text-block">
+          <span className="text-bold">Победы/Поражения (PvP)</span>
+          <span style={{marginTop: "5px"}}>{pvpWin}/{pvpLose}</span>
+        </div> */}
+        {/* <div className="text-block">
           <span className="text-bold">Этаж</span>
           <span style={{marginTop: "5px"}}>{towerLvl}</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

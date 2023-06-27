@@ -81,10 +81,32 @@ namespace MythConquestWeb
     public class User
     {
         public int userId { get; set; }
-
         public string userName { get; set; }
 
+        public string userPass { get; set; }
+
+        public bool isAuth { get; set; }
+
+        public bool isAdmin { get; set; }
+
+        public User()
+        {
+            userId = -1;
+            userName = "??";
+            userPass = "??";
+            isAuth = false;
+            isAdmin = false;
+        }
     }
+
+    public class DropResult
+    {
+        public string name { get; set; }
+        public string appearance_url { get; set; }
+        public string itemRarity { get; set; }
+        public string ascension_lvl { get; set; }
+    }
+
 
 }
 

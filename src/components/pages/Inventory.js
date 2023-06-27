@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "../../styles/pageStyles/Inventory.css";
 import InventoryStats from "../pageComponents/InventoryStats";
 import "../../styles/utilStyles/BaseStyles.css";
+import axios from "axios";
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 export class Inventory extends Component {
   static displayName = Inventory.name;
@@ -22,6 +25,7 @@ export class Inventory extends Component {
       health: "XXX",
       defense: "XXX",
     },
+    isImageClicked: false
   };
 
   renderImages() {
@@ -36,13 +40,15 @@ export class Inventory extends Component {
         key={profile.char_id}
         src={profile.appearance_url}
         className="inventory-image"
-        alt=""
+        alt={profile.char_id}
         onClick={() => this.handleImageClick(profile.char_id)}
       />
     ));
   }
 
   async componentDidMount() {
+    Cookies.remove('arenaLog');
+    Cookies.remove('battleLog');
     await this.getInventoryChars();
   }
 
@@ -54,7 +60,21 @@ export class Inventory extends Component {
 
   handleImageClick = (profileId) => {
     const selectedProfile = this.state.profileData[profileId];
-    this.setState({ selectedProfileId: profileId, selectedProfile });
+    this.setState({ selectedProfileId: profileId, selectedProfile, isImageClicked: true });
+  };
+
+  handleEquipClick = () => {
+    if (!this.state.isImageClicked) {
+      return; 
+    }
+    const selectedProfile = this.state.selectedProfileId;
+    axios.defaults.headers.common["curr_char_id"] = encodeURI(selectedProfile);
+    this.setState({ selectedProfile }, () => {
+      axios.post("equipchar", {}).then((response) => {
+        Swal.fire("", "Персонаж успешно экипирован!", "success");
+      });
+    });
+    this.setState({ isImageClicked: false });
   };
 
   render() {
@@ -99,7 +119,12 @@ export class Inventory extends Component {
             />
           )}
           <div className="column align-center">
-            <button className="button-long text-40px">Выбрать персонажа</button>
+            <button
+              className="button-long text-40px"
+              onClick={this.handleEquipClick}
+            >
+              Выбрать персонажа
+            </button>
           </div>
         </div>
       </div>

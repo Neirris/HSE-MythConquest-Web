@@ -6,6 +6,7 @@
     background: linear-gradient(180deg, rgba(240, 240, 240, 0.9), rgba(240, 240, 240, 0.7));
     transition: right 0.3s ease;
     overflow: hidden;
+    border-left: 5px solid #7289da;
   }
   
   .nav-menu.open {

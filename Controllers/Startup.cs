@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Http;
 
 namespace MythConquestWeb.Controllers
 {
@@ -33,10 +35,19 @@ namespace MythConquestWeb.Controllers
                 });
             });
 
+            // Добавляем сервис для работы с куками
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.HttpOnly = HttpOnlyPolicy.None;
+                options.Secure = CookieSecurePolicy.None;
+            });
+
             // Другие сервисы, если необходимо
 
             // Регистрируем ваш контроллер
             services.AddMvc().AddControllersAsServices();
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,6 +64,14 @@ namespace MythConquestWeb.Controllers
 
             // Используем CORS (если требуется)
             app.UseCors("AllowAnyOrigin");
+
+            // Используем промежуточное программное обеспечение для работы с куками
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.None,
+                HttpOnly = HttpOnlyPolicy.None,
+                Secure = CookieSecurePolicy.None
+            });
 
             // Добавляем маршрутизацию
             app.UseRouting();

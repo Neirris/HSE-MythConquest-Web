@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import "../../styles/utilStyles/BaseStyles.css";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export class Arena extends Component {
   static displayName = Arena.name;
 
   state = {
-    users: '',
+    users: "",
   };
 
   constructor(props) {
@@ -13,6 +15,7 @@ export class Arena extends Component {
     this.state = {
       isOpen: false,
       selectedOption: null,
+      arenaLog: [],
     };
     this.options = [];
   }
@@ -28,6 +31,7 @@ export class Arena extends Component {
       selectedOption: option,
       isOpen: false,
     });
+    axios.defaults.headers.common["currEnemyPlayer"] = option;
   };
 
   async getUsers() {
@@ -38,20 +42,62 @@ export class Arena extends Component {
 
   componentDidMount() {
     this.getUsers();
+    Cookies.remove('arenaLog');
+    Cookies.remove('battleLog');
+    window.addEventListener("beforeunload", this.handleBeforeUnload);
   }
+
+  async startArena() {
+    const { selectedOption } = this.state;
+    if (selectedOption !== "Выберите игрока"){
+      const response = await axios.post("startArena");
+      const data = response.data;
+      document.cookie = `arenaLog=${encodeURI(data)}`;
+      this.setState({ arenaLog: data });
+    }
+  }
+
+  getCookie(name) {
+    const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      if (cookie.startsWith(name + "=")) {
+        return decodeURI(cookie.substring(name.length + 1));
+      }
+    }
+    return null;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.handleBeforeUnload);
+    Cookies.remove('arenaLog');
+    Cookies.remove('battleLog');
+  }
+
+  handleBeforeUnload = () => {
+    Cookies.remove('arenaLog');
+    Cookies.remove('battleLog');
+  };
 
 
   render() {
-    const { isOpen, selectedOption, users} = this.state;
+    const { isOpen, selectedOption, users } = this.state;
     return (
       <div>
         <div className="top">
           <div className="top-square">
             <div style={{ height: "480px", overflow: "auto" }}>
-              <p
-                className="text-black text-30px"
-                style={{ marginLeft: "5px" }}
-              ></p>
+              <p className="text-black text-30px" style={{ marginLeft: "5px" }}>
+                {this.getCookie("arenaLog") &&
+                  this.getCookie("arenaLog")
+                    .split(",")
+                    .map((item, index) => (
+                      <span key={index}>
+                        {item}
+                        <br />
+                      </span>
+                    ))}
+              </p>
             </div>
           </div>
         </div>
@@ -75,7 +121,7 @@ export class Arena extends Component {
               )}
             </div>
             <div className="column align-center">
-              <button className="button-long text-40px">Сразиться</button>
+              <button className="button-long text-40px" onClick={() => this.startArena()}>Сразиться</button>
             </div>
           </div>
         </div>

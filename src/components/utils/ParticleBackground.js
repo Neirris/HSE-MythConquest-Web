@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const ParticleBackground = ({ width, height, top, left }) => {
   const canvasRef = useRef(null);
-  // eslint-disable-next-line no-unused-vars
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const particleCount = 200;

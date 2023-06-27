@@ -38,15 +38,6 @@ const AppRoutes = [
   {
     path: '/shop',
     element: <Shop />
-  },
-  {
-    path: '/login'
-  },
-  {
-    path: '/register'
-  },
-  {
-    path: '/exit'
   }
 ];
 
